@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+    html{
+    background-image: linear-gradient(45deg, #151f30 0%, #282e38 100%);
+    background-attachment:fixed;
+    height:100%;   
+    }
+    h1{
+        text-align: center;
+        color: aliceblue;
+    }
+    table{
+        margin-left:auto; 
+    margin-right:auto;
+    }
+    table, th, td{
+        border: 1px solid black;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+    }
+    p{
+        color:aliceblue;
+    }
+
+
+</style>
+<script>
+
+function ingredients(ingredient){
+
+    if(ingredient == null){
+       return "";
+    }
+
+    return ("<br>" +ingredient);
+
+
+}
+
+$(document).ready(function(){
+        let url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
+        $.getJSON(url, function(data){
+
+            var response = "";
+            $.each(data.drinks, function(index,ctail){
+                response= response + " " + ctail.strDrink + "<br><br>"; 
+                response = response + '<img src= "'+ctail.strDrinkThumb+'" alt="drank"> ';
+                
+
+                response = response + "<br><br>INGREDIENTS: <br>";
+                //API is dumb and I don't know how to enumerate when stores all ingredients as different variables instead of as array
+                response = response + ingredients(ctail.strIngredient1)
+                response = response + ingredients(ctail.strIngredient2)
+                response = response + ingredients(ctail.strIngredient3)
+                response = response + ingredients(ctail.strIngredient4)
+                response = response + ingredients(ctail.strIngredient5)
+                response = response + ingredients(ctail.strIngredient6)
+                response = response + ingredients(ctail.strIngredient7)
+                response = response + ingredients(ctail.strIngredient8)
+                response = response + ingredients(ctail.strIngredient9)
+                response = response + ingredients(ctail.strIngredient10)
+                response = response + ingredients(ctail.strIngredient11)
+                response = response + ingredients(ctail.strIngredient12)
+                response = response + ingredients(ctail.strIngredient13)
+                response = response + ingredients(ctail.strIngredient14)
+                response = response + ingredients(ctail.strIngredient15)
+                
+
+
+                response = response + "<br><br>INSTRUCTIONS:";
+                response = response + "<br>" + ctail.strInstructions;
+            });
+
+            $("#resp").html(response);
+        });
+    });
+   
+
+</script>
+
+<body>
+ 
+  <h1>Random Cocktail!</h1>
+  <p id="resp"></p>
+  
+</body>
+
+
+</html>
