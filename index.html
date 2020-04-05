@@ -4,7 +4,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
     html{
-    background-image: linear-gradient(45deg, #151f30 0%, #282e38 100%);
+    background-image: linear-gradient(45deg, #151f30 0%, #07090c 100%);
     background-attachment:fixed;
     height:100%;   
     }
@@ -26,6 +26,23 @@
     }
     p{
         color:aliceblue;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    p.centered{
+        
+    }
+    img{
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        height: 25%;
+        width: 25%;
+        
     }
 
 
@@ -49,11 +66,11 @@ $(document).ready(function(){
 
             var response = "";
             $.each(data.drinks, function(index,ctail){
-                response= response + " " + ctail.strDrink + "<br><br>"; 
+                response= response + "<p><b> " + ctail.strDrink + "</b></p>"; 
                 response = response + '<img src= "'+ctail.strDrinkThumb+'" alt="drank"> ';
                 
 
-                response = response + "<br><br>INGREDIENTS: <br>";
+                response = response + "<br><br><b>INGREDIENTS: </b>";
                 //API is dumb and I don't know how to enumerate when stores all ingredients as different variables instead of as array
                 response = response + ingredients(ctail.strIngredient1)
                 response = response + ingredients(ctail.strIngredient2)
@@ -73,13 +90,57 @@ $(document).ready(function(){
                 
 
 
-                response = response + "<br><br>INSTRUCTIONS:";
+                response = response + "<br><br> <b>INSTRUCTIONS:</b>";
                 response = response + "<br>" + ctail.strInstructions;
             });
 
             $("#resp").html(response);
         });
     });
+
+    function plop(){
+        
+        srch = document.getElementById("search").value;
+        let url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" +srch;
+        $.getJSON(url, function(data){
+
+            var response = "";
+            $.each(data.drinks, function(index,ctail){
+                response= response + "<p><b> " + ctail.strDrink + "</b></p>"; 
+                response = response + '<img src= "'+ctail.strDrinkThumb+'" alt="drank"> ';
+                
+
+                response = response + "<br><br><b>INGREDIENTS: </b>";
+                //API is dumb and I don't know how to enumerate when stores all ingredients as different variables instead of as array
+                response = response + ingredients(ctail.strIngredient1)
+                response = response + ingredients(ctail.strIngredient2)
+                response = response + ingredients(ctail.strIngredient3)
+                response = response + ingredients(ctail.strIngredient4)
+                response = response + ingredients(ctail.strIngredient5)
+                response = response + ingredients(ctail.strIngredient6)
+                response = response + ingredients(ctail.strIngredient7)
+                response = response + ingredients(ctail.strIngredient8)
+                response = response + ingredients(ctail.strIngredient9)
+                response = response + ingredients(ctail.strIngredient10)
+                response = response + ingredients(ctail.strIngredient11)
+                response = response + ingredients(ctail.strIngredient12)
+                response = response + ingredients(ctail.strIngredient13)
+                response = response + ingredients(ctail.strIngredient14)
+                response = response + ingredients(ctail.strIngredient15)
+                
+
+
+                response = response + "<br><br> <b>INSTRUCTIONS:</b>";
+                response = response + "<br>" + ctail.strInstructions + "<hr>";
+
+            
+            });
+
+            $("#resp").html(response);
+        });
+
+
+    }
    
 
 </script>
@@ -87,8 +148,14 @@ $(document).ready(function(){
 <body>
  
   <h1>Random Cocktail!</h1>
+  
   <p id="resp"></p>
   
+<div style = "text-align: center;"> 
+    <input type ="text" value = "Search for a cocktail" id="search">
+  
+  <button id="button" onclick="plop()">Submit</button>
+</div> 
 </body>
 
 
