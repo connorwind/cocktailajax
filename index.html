@@ -61,6 +61,59 @@ function ingredients(ingredient){
 
 }
 
+function show_ajax (){
+   
+    var request = new XMLHttpRequest();
+    var url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f="
+    url = url + document.getElementById("l").value
+    request.open("GET", url, true);
+    
+    request.onreadystatechange = function() {
+    if (request.readyState == 4 && request.status == 200) 
+				{   
+                   
+                    var data = JSON.parse(request.responseText);
+					var response = "";
+                     $.each(data.drinks, function(index,ctail){
+                        response= response + "<p><b> " + ctail.strDrink + "</b></p>"; 
+                        response = response + '<img src= "'+ctail.strDrinkThumb+'" alt="drank"> ';
+                        
+
+                        response = response + "<br><br><b>INGREDIENTS: </b>";
+                        //API is dumb and I don't know how to enumerate when stores all ingredients as different variables instead of as array
+                        response = response + ingredients(ctail.strIngredient1)
+                        response = response + ingredients(ctail.strIngredient2)
+                        response = response + ingredients(ctail.strIngredient3)
+                        response = response + ingredients(ctail.strIngredient4)
+                        response = response + ingredients(ctail.strIngredient5)
+                        response = response + ingredients(ctail.strIngredient6)
+                        response = response + ingredients(ctail.strIngredient7)
+                        response = response + ingredients(ctail.strIngredient8)
+                        response = response + ingredients(ctail.strIngredient9)
+                        response = response + ingredients(ctail.strIngredient10)
+                        response = response + ingredients(ctail.strIngredient11)
+                        response = response + ingredients(ctail.strIngredient12)
+                        response = response + ingredients(ctail.strIngredient13)
+                        response = response + ingredients(ctail.strIngredient14)
+                        response = response + ingredients(ctail.strIngredient15)
+                        
+
+
+                        response = response + "<br><br> <b>INSTRUCTIONS:</b>";
+                        response = response + "<br>" + ctail.strInstructions;
+                        response = response + "<br>" + ctail.strInstructions + "<hr>"
+            });
+            
+            $("#resp").html(response);		
+            }
+            else if (request.readyState == 4 && request.status != 200) 
+            {
+                document.getElementById("cData").innerHTML += "<br>Request failed!";
+            }
+    }
+            request.send();
+}
+
 $(document).ready(function(){
         let url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
         $.getJSON(url, function(data){
@@ -153,10 +206,57 @@ $(document).ready(function(){
   <p id="resp"></p>
   
 <div style = "text-align: center;"> 
-    <input type ="text" placeholder = "Search for a cocktail" id="search">
+    <input type ="text" placeholder = "Search by cocktail name" id="search">
   
-  <button id="button" onclick="plop()">Submit</button>
+  <button id="button" onclick="plop()">Submit</button> <br><br>
 </div> 
+
+<p style = "text-align: center;"> 
+    search by letter:
+    <select type ="select" placeholder = "List cocktails by first letter" id="l">
+    <option value="a">a</option>
+    <option value="b">b</option>
+    <option value="c">c</option>
+    <option value="d">d</option>
+    <option value="e">e</option>
+    <option value="f">f</option>
+    <option value="g">g</option>
+    <option value="h">h</option>
+    <option value="i">i</option>
+    <option value="j">j</option>
+    <option value="k">k</option>
+    <option value="l">l</option>
+    <option value="m">m</option>
+    <option value="n">n</option>
+    <option value="o">o</option>
+    <option value="p">p</option>
+    <option value="q">q</option>
+    <option value="r">r</option>
+    <option value="s">s</option>
+    <option value="t">t</option>
+    <option value="u">u</option>
+    <option value="v">v</option>
+    <option value="w">w</option>
+    <option value="x">x</option>
+    <option value="y">y</option>
+    <option value="z">z</option>
+    </select>
+  
+  <button id="button2" onclick="show_ajax()">Submit</button>
+</p> 
+
+
+<br> <hr> <br>
+
+<p>
+The API is called cocktailDB and is a database of around 500 cocktails<br><br>
+https://www.thecocktaildb.com/api.php <br><br>
+The api link I cited above lists the functions users can request. I used a name search function,
+a search by first letter, and a random cocktail generator on page refresh. The requests return a list of drinks
+in JSON format which I then used to display an image of the drinks, their ingredients and a basic recipe. 
+<br><br>
+This application could be useful for a person during quarantine who wants to try new drinks or a bar that could have a suprise drink and have a database of random drinks that they could make people
+</p>
 </body>
 
 
